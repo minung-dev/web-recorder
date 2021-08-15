@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "web recorder",
+  "version": "0.0.1",
+
+  "description": "확장앱 설명",
+  
+  "sidebar_action": {
+    "default_page": "src/index.html",
+    "default_icon": {
+        "16": "icon.png"
+    },
+
+    "default_title": "web recorder",
+    "use_navigation_bar": false
+  }
+}
