@@ -8,6 +8,7 @@
     "start:dev": "parcel src/index.html"
   },
   "devDependencies": {
+    "@types/react": "^17.0.18",
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.3.5"
   },

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from './components/Button';
 
-function MainApp(props) {
+function MainApp() {
   return (
-    <div>
-      테스트
+    <div className="container">
+      <Button>녹화</Button>
     </div>
   );
 }
