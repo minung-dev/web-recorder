@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './components/Button';
 
+import RecordPage from './pages/RecordPage';
+
 function MainApp() {
   return (
-    <div className="container">
-      <Button>녹화</Button>
-    </div>
+    <RecordPage />
   );
 }
 

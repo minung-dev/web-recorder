@@ -1,18 +1,20 @@
 import React from 'react';
 
 type ButtonProps = {
-  children: React.ReactChild
+  children: React.ReactChild,
+  onClick: React.MouseEventHandler<HTMLButtonElement>,
 };
 
-function Button({ children }: ButtonProps) {
+function Button({ children, onClick }: ButtonProps) {
   return (
-    <button className="button is-primary">
+    <button className="button is-primary is-fullwidth" onClick={onClick}>
       {children}
     </button>
   );
 }
 
 Button.defaultProps = {
+  onClick: () => {},
 };
 
 export default Button;
