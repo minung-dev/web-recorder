@@ -9,10 +9,10 @@ let mediaRecorder = null;
 let recordedMediaUrl = null;
 
 permissionBtn.addEventListener('click', function () {
-	// 1. mediaStream 얻기 (카메라, 스크린 등등)
-	const constraints = { audio: false, video: true };
-	// 카메라 mediaStream 얻기
-	// navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
+	const constraints = {
+    video: true,
+    audio: false,
+  };
 	// 스크린 mediaStream 얻기
 	navigator.mediaDevices.getDisplayMedia(constraints).then(function(mediaStream) {
 		// 비디오 트랙을 포함한 MediaStream
@@ -38,14 +38,13 @@ function setPreview(mediaStream) {
 }
 
 function setRecorder(stream) {
-	if (!MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+	if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) {
 		alert('지원하지 않음');
 	}
 
 	// 1.MediaStream을 매개변수로 MediaRecorder 생성자를 호출
 	const options = {
-		audioBitsPerSecond: 128000,
-		mimeType: 'audio/webm;codecs=opus'
+		mimeType: 'video/webm;codecs=vp8,opus' // 최고 화질
 	};
 	const mediaRecorder = new MediaRecorder(stream, options);
 
@@ -61,17 +60,11 @@ function setRecorder(stream) {
   // record가 끝났을 때 이벤트 핸들러 등록
 	// 여기서 그동안 쌓인 chunk 데이터를 가지고 처리를 해준다
 	mediaRecorder.addEventListener('stop', function() {
-		// audio 예제
-    // playAudio(recordedChunks);
-
 		// video 예제
-		playVideo(recordedChunks);
+		// playVideo(recordedChunks);
 
 		// download 예제
-		// downloadVideo(recordedChunks);
-
-    // upload 예제
-    // uploadVideo(recordedChunks);
+		downloadVideo(recordedChunks);
 	});
 
 	// 녹화 시작, 녹화 종료 핸들러 등록
@@ -87,17 +80,10 @@ function setRecorder(stream) {
 // 생성된 Blob을 매개변수로 URL.createObjectURL 메서드를 호출하면 URL 생성
 // url 사용 완료 이후에는 revokeObjectURL을 호출해줘야함 (메모리 누수 방지)
 
-// audio 예제
-function playAudio(recordedChunks) {
-	const blob = new Blob(recordedChunks);
-	const url = window.URL.createObjectURL(blob);
-	const audio = document.querySelector('audio');
-	audio.src = url;
-}
 
 // video 예제
 function playVideo(recordedChunks) {
-	const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+	const blob = new Blob(recordedChunks, { type: 'video/webm' });
 	const url = window.URL.createObjectURL(blob);
 	videoOutput.src = url;
 }
@@ -112,15 +98,48 @@ function downloadVideo(recordedChunks) {
 	aElm.click();
 }
 
-// 파일 업로드 예제
-function uploadVideo(recordedChunks) {
-	const blob = new Blob(recordedChunks);
 
-	const formdata = new FormData();
-	formdata.append('fname', 'audio.webm');
-	formdata.append('data', blob);
 
-	const xhr = new XMLHttpRequest();
-	xhr.open('POST', '/upload', false);
-	xhr.send(formdata);
+
+const videoElem = document.getElementById("video");
+const logElem = document.getElementById("log");
+const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
+
+// Options for getDisplayMedia()
+
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: false
+};
+
+// Set event listeners for the start and stop buttons
+
+
+async function startCapture() {
+  logElem.innerHTML = "";
+
+  try {
+    videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+    dumpOptionsInfo();
+  } catch(err) {
+    console.error("Error: " + err);
+  }
 }
+function stopCapture(evt) {
+  let tracks = videoElem.srcObject.getTracks();
+
+  tracks.forEach(track => track.stop());
+  videoElem.srcObject = null;
+}
+function dumpOptionsInfo() {
+  const videoTrack = videoElem.srcObject.getVideoTracks()[0];
+
+  console.info("Track settings:");
+  console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
+  console.info("Track constraints:");
+  console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+}
+            

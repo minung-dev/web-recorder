@@ -12,6 +12,7 @@
     },
 
     "default_title": "web recorder",
-    "use_navigation_bar": false
+    "use_navigation_bar": false,
+    "mobile_user_agent": false
   }
 }
