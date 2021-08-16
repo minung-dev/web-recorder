@@ -5,14 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+   <!-- Compiled and minified CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+   <!-- Compiled and minified JavaScript -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   
 </head>
 <body>
-  <button id="permission-btn">권한 얻기</button>
-  <button id="start-btn">녹화 시작</button>
-  <button id="finish-btn">녹화 종료</button>
-  <video id="video-preview" style="width: 400px; height: 225px"></video> 
-  <video id="video-output" style="width: 400px; height: 225px" controls></video> 
-
-  <script src="./index.js"></script>
+  <!-- <div class="container">
+    <div style="display: flex; justify-content: space-bewteen">
+      <button class="waves-effect waves-light btn" id="permission-btn">권한 얻기</button>
+      <button class="waves-effect waves-light btn" id="start-btn">녹화 시작</button>
+      <button class="waves-effect waves-light btn" id="finish-btn">녹화 종료</button>
+    </div>
+    <video id="video-preview" class="responsive-video" ></video> 
+    <video id="video-output" class="responsive-video" style="width: 100%;" controls></video> 
+  </div> -->
+  <div id="app"></div>
+  
+  <script src="./index.tsx"></script>
 </body>
 </html>
