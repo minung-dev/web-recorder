@@ -1,7 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import Button from '../../components/Button';
 import Video from '../../components/Video';
+
+import useToggle from '../../hooks/useToggle';
+import useRecording from '../../hooks/useRecording';
 
 declare global {
   interface MediaDevices {
@@ -11,29 +14,43 @@ declare global {
 
 type RecordPageProps = {};
 function RecordPage(props: RecordPageProps) {
+  const { recording, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    if (videoRef.current && recording) {
+      videoRef.current.srcObject = getLiveStream();
+    }
+  }, [recording, videoRef.current]);
+
+
   const handleRecordClick = () => {
-    const constraints = {
-      video: true,
-      audio: false,
-    };
-    navigator.mediaDevices.getDisplayMedia(constraints).then(function (mediaStream: MediaProvider | null) {
-      if (!videoRef.current) {
-        return;
-      }
-      // MediaStream을 HTMLVideoElement의 source 설정
-      videoRef.current.srcObject = mediaStream;
-    });
+    startRecording();
+  };
+
+  const handleStopClick = () => {
+    stopRecording();
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
   };
 
   return (
     <div className="container">
       <section className="section">
         <Video ref={videoRef} autoPlay />
-        <Button onClick={handleRecordClick}>
-          녹화
-        </Button>
+        {!recording && (
+          <Button onClick={handleRecordClick}>
+            녹화 시작
+          </Button>
+        )}
+        {recording && (
+          <Button onClick={handleStopClick}>
+            녹화 종료
+          </Button>
+        )}
       </section>
     </div>
   );
