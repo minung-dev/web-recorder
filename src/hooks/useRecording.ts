@@ -48,6 +48,7 @@ function useRecording() {
   };
 
   const stopRecording = () => {
+    recordedChunks.current = []; // clear chunks
     mediaRecorder.current?.stop();
 
     const tracks = mediaStream.current?.getTracks();
