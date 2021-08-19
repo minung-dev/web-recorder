@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
-
+import { useState, useRef } from 'react';
 
 const constraints = {
   video: true,
@@ -17,9 +16,6 @@ function useRecording() {
   const mediaStream = useRef<MediaStream | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordedChunks = useRef<Blob[]>([]);
-
-  const [recording, setRecording] = useState(false);
-
 
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     alert('지원하지 않는 브라우저입니다.');
@@ -44,7 +40,7 @@ function useRecording() {
     recordedChunks.current = []; // clear chunks
 
     if (!mediaStream.current) {
-      mediaStream.current = await navigator.mediaDevices.getDisplayMedia(constraints);
+      mediaStream.current = await (navigator.mediaDevices as any).getDisplayMedia(constraints);
     }
     
     if (mediaStream.current) {
