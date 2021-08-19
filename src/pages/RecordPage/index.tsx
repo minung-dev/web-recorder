@@ -14,16 +14,17 @@ declare global {
 
 type RecordPageProps = {};
 function RecordPage(props: RecordPageProps) {
-  const { recording, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
+  const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current && recording) {
+    if (videoRef.current && (recordState === 'recording')) {
       videoRef.current.srcObject = getLiveStream();
+    } else if (videoRef.current && (recordState === 'stopped')) {
+      videoRef.current.srcObject = null;
     }
-  }, [recording, videoRef.current]);
-
+  }, [recordState, videoRef.current]);
 
   const handleRecordClick = () => {
     startRecording();
@@ -31,11 +32,9 @@ function RecordPage(props: RecordPageProps) {
 
   const handleStopClick = () => {
     stopRecording();
-
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
-    }
   };
+
+  const recording = recordState === 'recording';
 
   return (
     <div className="container">

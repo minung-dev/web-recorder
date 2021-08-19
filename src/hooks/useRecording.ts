@@ -10,7 +10,10 @@ const options = {
   mimeType: 'video/webm;codecs=vp8,opus'
 };
 
+type RecordState = 'idle' | 'recording' | 'stopped';
+
 function useRecording() {
+  const [recordState, setRecordState] = useState<RecordState>('idle');
   const mediaStream = useRef<MediaStream | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordedChunks = useRef<Blob[]>([]);
@@ -29,10 +32,17 @@ function useRecording() {
   };
 
   const onStop = () => {
-    setRecording(false);
+    setRecordState('stopped');
+
+    const tracks = mediaStream.current?.getTracks();
+    tracks?.forEach((track) => track.stop());
+
+    mediaStream.current = null;
   };
 
   const startRecording = async () => {
+    recordedChunks.current = []; // clear chunks
+
     if (!mediaStream.current) {
       mediaStream.current = await navigator.mediaDevices.getDisplayMedia(constraints);
     }
@@ -44,26 +54,20 @@ function useRecording() {
       mediaRecorder.current.start();
     }
 
-    setRecording(true);
+    setRecordState('recording');
   };
 
   const stopRecording = () => {
-    recordedChunks.current = []; // clear chunks
     mediaRecorder.current?.stop();
-
-    const tracks = mediaStream.current?.getTracks();
-    tracks?.forEach((track) => track.stop());
-
-    mediaStream.current = null;
   };
 
   return {
-    recording,
+    recordState,
     startRecording,
     stopRecording,
     getLiveStream: () => mediaStream.current,
     getVideoUrl: () => getVideoUrl(recordedChunks.current),
-    downloadVideo: () => downloadVideo(recordedChunks.current, 'video'),
+    downloadVideo: (fileName: string = 'video') => downloadVideo(recordedChunks.current, fileName),
   };
 }
 
