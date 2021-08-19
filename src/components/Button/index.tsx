@@ -1,13 +1,16 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 type ButtonProps = {
   children: React.ReactChild,
+  className?: string,
   onClick: React.MouseEventHandler<HTMLButtonElement>,
 };
 
-function Button({ children, onClick }: ButtonProps) {
+function Button({ children, className, onClick }: ButtonProps) {
   return (
-    <button className="button is-primary is-fullwidth" onClick={onClick}>
+    <button className={classNames(className, 'button is-primary is-fullwidth')} onClick={onClick}>
       {children}
     </button>
   );
