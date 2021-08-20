@@ -42,7 +42,7 @@ function RecordPage(props: RecordPageProps) {
         </Button>
   
         {stopped && (
-          <Button onClick={() => downloadVideo()}>
+          <Button className="mt-3" outline onClick={() => downloadVideo()}>
             다운로드
           </Button>
         )}

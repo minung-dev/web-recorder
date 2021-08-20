@@ -7,7 +7,7 @@ type VideoProps = {
 
 const Video = React.forwardRef(({ autoPlay, controls }: VideoProps, ref: React.Ref<HTMLVideoElement>) => {
   return (
-    <video style={{ width: '100%', backgroundColor: '#000' }} ref={ref} autoPlay={autoPlay} controls={controls} />
+    <video style={{ width: '100%', height: '300px', backgroundColor: '#000' }} ref={ref} autoPlay={autoPlay} controls={controls} />
   );
 });
 

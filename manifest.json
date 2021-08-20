@@ -6,7 +6,7 @@
   "description": "확장앱 설명",
   
   "sidebar_action": {
-    "default_page": "src/index.html",
+    "default_page": "dist/index.html",
     "default_icon": {
         "16": "icon.png"
     },
