@@ -30,7 +30,7 @@ function RecordPage(props: RecordPageProps) {
 
   return (
     <div className="container">
-      <section className="section">
+      <section className="section py-4">
         {stopped ? (
           <Video key="preview" ref={previewVideoRef} autoPlay controls />
         ) : (
