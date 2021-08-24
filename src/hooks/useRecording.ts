@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 
 const constraints = {
   video: true,
-  audio: false,
+  audio: true,
 };
 
 const options = {

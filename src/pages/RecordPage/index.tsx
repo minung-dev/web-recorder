@@ -34,7 +34,7 @@ function RecordPage(props: RecordPageProps) {
         {stopped ? (
           <Video key="preview" ref={previewVideoRef} autoPlay controls />
         ) : (
-          <Video key="record" ref={recordingVideoRef} autoPlay />
+          <Video key="record" ref={recordingVideoRef} autoPlay muted />
         )}
      
         <Button onClick={recording ? stopRecording : startRecording}>
