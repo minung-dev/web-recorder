@@ -98,7 +98,9 @@ async function downloadGif(chunks: Blob[], fileName: string) {
 async function convertToGif (chunks: Blob[]) {
   const blob = new Blob(chunks, { type: 'video/webm' });
 
-  await ffmpeg.load();
+  if (!ffmpeg.isLoaded()) {
+    await ffmpeg.load();
+  }
 
   // 메모리에 파일 올리기
   ffmpeg.FS('writeFile', 'test.webm', await fetchFile(blob));
