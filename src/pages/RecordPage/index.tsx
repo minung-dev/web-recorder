@@ -8,7 +8,8 @@ import useRecording from '../../hooks/useRecording';
 
 type RecordPageProps = {};
 function RecordPage(props: RecordPageProps) {
-  const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
+  const [isLoading, setIsLoading] = useState(false);
+  const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo, downloadGif } = useRecording(); 
 
   const recordingVideoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
@@ -28,8 +29,18 @@ function RecordPage(props: RecordPageProps) {
     }
   }, [recordState]);
 
+  const handleVideoDownloadClick = () => {
+    downloadVideo();
+  }
+
+  const handleGifDownloadClick = async () => {
+    setIsLoading(true);
+    await downloadGif();
+    setIsLoading(false);
+  };
+
   return (
-    <div className="container">
+    <div className="container is-flex is-flex-direction-column">
       <section className="section py-4">
         {stopped ? (
           <Video key="preview" ref={previewVideoRef} autoPlay controls />
@@ -37,14 +48,18 @@ function RecordPage(props: RecordPageProps) {
           <Video key="record" ref={recordingVideoRef} autoPlay muted />
         )}
      
-        <Button onClick={recording ? stopRecording : startRecording}>
+        <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
-  
         {stopped && (
-          <Button className="mt-3" outline onClick={() => downloadVideo()}>
-            다운로드
-          </Button>
+          <>
+            <Button className="mt-3" outline onClick={handleVideoDownloadClick}>
+              비디오 다운로드
+            </Button>
+            <Button className="mt-3" outline loading={isLoading} onClick={handleGifDownloadClick}>
+              GIF 다운로드
+            </Button>
+          </>
         )}
       </section>
     </div>
