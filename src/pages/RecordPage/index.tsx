@@ -52,9 +52,7 @@ function RecordPage(props: RecordPageProps) {
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
       </Section>
-      {stopped && (
-        <DownloadPanel onDownloadClick={handleDownloadClick} />
-      )}
+      <DownloadPanel open={stopped} onDownloadClick={handleDownloadClick} />
     </div>
   );
 }
