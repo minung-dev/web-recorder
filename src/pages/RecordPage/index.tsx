@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
+import Section from '../../components/Section';
 import Button from '../../components/Button';
 import Video from '../../components/Video';
 import DownloadPanel from '../../components/DownloadPanel';
@@ -41,7 +42,7 @@ function RecordPage(props: RecordPageProps) {
 
   return (
     <div className="container is-flex is-flex-direction-column">
-      <section className="section py-4">
+      <Section>
         {stopped ? (
           <Video key="preview" ref={previewVideoRef} autoPlay controls />
         ) : (
@@ -50,7 +51,7 @@ function RecordPage(props: RecordPageProps) {
         <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
-      </section>
+      </Section>
       {stopped && (
         <DownloadPanel onDownloadClick={handleDownloadClick} />
       )}

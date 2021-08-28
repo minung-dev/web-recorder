@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 
+import Section from '../Section';
 import Button from '../Button';
 import Select from '../Select';
 
@@ -28,14 +29,14 @@ function DownloadPanel({ onDownloadClick }: DownloadPanelProps) {
   };
 
   return (
-    <section className={classnames(styles.DownloadPanel, 'section py-3')}>
+    <Section className={styles.DownloadPanel}>
       <div className="field">
         <label className="label">파일 포멧</label>
         <Select items={FORMAT_ITEMS} selected={format} onChange={setFormat} />
         <p className="help">다운로드할 파일의 포멧을 선택합니다.</p>
       </div>
       <Button color="info" loading={isLoading} onClick={handleDownloadClick}>다운로드</Button>
-    </section>
+    </Section>
   );
 }
 
