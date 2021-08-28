@@ -1,0 +1,11 @@
+.Select {
+  display: flex;
+}
+
+.Select button {
+  margin-left: 12px;
+}
+
+.Select button:first-child {
+  margin-left: 0;
+}
