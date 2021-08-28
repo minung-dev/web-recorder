@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import Button from '../../components/Button';
 import Video from '../../components/Video';
+import DownloadPanel from '../../components/DownloadPanel';
 
-import useToggle from '../../hooks/useToggle';
 import useRecording from '../../hooks/useRecording';
 
 type RecordPageProps = {};
 function RecordPage(props: RecordPageProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo, downloadGif } = useRecording(); 
 
   const recordingVideoRef = useRef<HTMLVideoElement>(null);
@@ -29,14 +28,15 @@ function RecordPage(props: RecordPageProps) {
     }
   }, [recordState]);
 
-  const handleVideoDownloadClick = () => {
-    downloadVideo();
-  }
+  const handleDownloadClick = async (type: string) => {
+    const handlerMap: {
+      [key: string]: (filename?: string) => void | Promise<void>
+    } = {
+      video: downloadVideo,
+      gif: downloadGif,
+    }
 
-  const handleGifDownloadClick = async () => {
-    setIsLoading(true);
-    await downloadGif();
-    setIsLoading(false);
+    await handlerMap[type]();
   };
 
   return (
@@ -47,21 +47,13 @@ function RecordPage(props: RecordPageProps) {
         ) : (
           <Video key="record" ref={recordingVideoRef} autoPlay muted />
         )}
-     
         <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
-        {stopped && (
-          <>
-            <Button className="mt-3" outline onClick={handleVideoDownloadClick}>
-              비디오 다운로드
-            </Button>
-            <Button className="mt-3" outline loading={isLoading} onClick={handleGifDownloadClick}>
-              GIF 다운로드
-            </Button>
-          </>
-        )}
       </section>
+      {stopped && (
+        <DownloadPanel onDownloadClick={handleDownloadClick} />
+      )}
     </div>
   );
 }
