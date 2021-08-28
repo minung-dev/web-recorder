@@ -1,4 +1,16 @@
 .DownloadPanel {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
   width: 100%;
+  background-color: #fff;
   border-top: 1px solid hsl(0, 0%, 86%);
+
+  transition: transform 0.5s ease 0s;
+  transform: translate3d(0px, 100%, 0px);
+}
+
+.DownloadPanel.open {
+  transform: translate3d(0px, 0px, 0px);
 }

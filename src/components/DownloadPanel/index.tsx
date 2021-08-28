@@ -16,9 +16,10 @@ const FORMAT_ITEMS = [{
 }];
 
 type DownloadPanelProps = {
+  open: boolean,
   onDownloadClick: (type: string) => Promise<void>,
 };
-function DownloadPanel({ onDownloadClick }: DownloadPanelProps) {
+function DownloadPanel({ open, onDownloadClick }: DownloadPanelProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [format, setFormat] = useState(FORMAT_ITEMS[0].value);
 
@@ -29,7 +30,7 @@ function DownloadPanel({ onDownloadClick }: DownloadPanelProps) {
   };
 
   return (
-    <Section className={styles.DownloadPanel}>
+    <Section className={classnames(styles.DownloadPanel, open && styles.open)}>
       <div className="field">
         <label className="label">파일 포멧</label>
         <Select items={FORMAT_ITEMS} selected={format} onChange={setFormat} />
@@ -41,6 +42,7 @@ function DownloadPanel({ onDownloadClick }: DownloadPanelProps) {
 }
 
 DownloadPanel.defaultProps = {
+  open: false,
   onDownloadClick: () => {},
 };
 
