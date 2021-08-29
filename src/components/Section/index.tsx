@@ -9,7 +9,7 @@ type SectionProps = {
 
 function Section({ className, children }: SectionProps) {
   return (
-    <section className={classnames(className, 'section py-4')}>
+    <section className={classnames(className, 'px-5 py-4')}>
       {children}
     </section>
   );
