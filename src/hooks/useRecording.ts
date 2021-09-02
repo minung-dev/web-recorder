@@ -86,16 +86,16 @@ function downloadVideo(chunks: Blob[], fileName: string) {
 	aElement.click();
 }
 
-async function downloadGif(chunks: Blob[], fileName: string) {
-  const url = await convertToGif(chunks);
+async function downloadGif(chunks: Blob[], fileName: string, type: string = 'gif') {
+  const url = await convertToGif(chunks, type);
   const aElement = document.createElement('a');
 	aElement.href = url;
-	aElement.download = `${fileName}.gif`;
+	aElement.download = `${fileName}.${type}`;
 	aElement.click();
 }
 
 // TODO: worker에서 동작하도록 수정
-async function convertToGif (chunks: Blob[]) {
+async function convertToGif (chunks: Blob[], type: string = 'gif') {
   const blob = new Blob(chunks, { type: 'video/webm' });
 
   if (!ffmpeg.isLoaded()) {
@@ -105,15 +105,26 @@ async function convertToGif (chunks: Blob[]) {
   // 메모리에 파일 올리기
   ffmpeg.FS('writeFile', 'test.webm', await fetchFile(blob));
   
-  // gif로 변환
-  await ffmpeg.run('-i', 'test.webm', '-r', '10', 'out.gif');
-  // TODO: mp4 다운로드 기능 지원
-  // await ffmpeg.run('-i', 'test.webm', '-c:a', 'libopus', '-b:a', '96K', '-strict', 'out.mp4');
+  const convertMap: { [key:string]: () => Promise<void> } = {
+    gif: () => ffmpeg.run('-i', 'test.webm', '-r', '10', 'out.gif'),
+    mp4: () => ffmpeg.run('-i', 'test.webm', 'out.mp4'),
+  };
+
+  const mimeTypeMap: { [key: string]: string } = {
+    gif: 'image/gif',
+    mp4: 'video/mp4',
+  };
+
+  const convert = convertMap[type];
+  const mimeType = mimeTypeMap[type];
+
+  // 파일 형식에 맞게 변환
+  await convert();
 
   // 파일 불러오기
-  const data = ffmpeg.FS('readFile', 'out.gif');
+  const data = ffmpeg.FS('readFile', `out.${type}`);
 
-  const url = URL.createObjectURL(new Blob([data.buffer], { type: 'image/gif' }));
+  const url = URL.createObjectURL(new Blob([data.buffer], { type:mimeType }));
   return url;
 }
 
