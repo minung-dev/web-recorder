@@ -67,7 +67,7 @@ function useRecording() {
     stopRecording,
     getLiveStream: () => mediaStream.current,
     getVideoUrl: () => getVideoUrl(recordedChunks.current),
-    downloadVideo: (fileName: string = 'video', type: string = 'webm') => downloadVideo(recordedChunks.current, fileName, type),
+    downloadVideo: (type: string = 'webm', fileName: string = 'video') => downloadVideo(recordedChunks.current, type, fileName),
   };
 }
 
