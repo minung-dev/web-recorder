@@ -67,8 +67,7 @@ function useRecording() {
     stopRecording,
     getLiveStream: () => mediaStream.current,
     getVideoUrl: () => getVideoUrl(recordedChunks.current),
-    downloadVideo: (fileName: string = 'video') => downloadVideo(recordedChunks.current, fileName),
-    downloadGif: (fileName: string = 'video') => downloadGif(recordedChunks.current, fileName),
+    downloadVideo: (fileName: string = 'video', type: string = 'webm') => downloadVideo(recordedChunks.current, fileName, type),
   };
 }
 
@@ -77,17 +76,8 @@ function getVideoUrl(chunks: Blob[]): string {
 	return window.URL.createObjectURL(blob);
 }
 
-function downloadVideo(chunks: Blob[], fileName: string) {
-	const blob = new Blob(chunks);
-
-	const aElement = document.createElement('a');
-	aElement.href = URL.createObjectURL(blob);
-	aElement.download = `${fileName}.webm`;
-	aElement.click();
-}
-
-async function downloadGif(chunks: Blob[], fileName: string, type: string = 'gif') {
-  const url = await convertToGif(chunks, type);
+async function downloadVideo(chunks: Blob[], type: string = 'webm', fileName: string = 'video') {
+  const url = await convertVideo(chunks, type);
   const aElement = document.createElement('a');
 	aElement.href = url;
 	aElement.download = `${fileName}.${type}`;
@@ -95,7 +85,7 @@ async function downloadGif(chunks: Blob[], fileName: string, type: string = 'gif
 }
 
 // TODO: worker에서 동작하도록 수정
-async function convertToGif (chunks: Blob[], type: string = 'gif') {
+async function convertVideo (chunks: Blob[], type: string = 'webm') {
   const blob = new Blob(chunks, { type: 'video/webm' });
 
   if (!ffmpeg.isLoaded()) {
@@ -103,14 +93,16 @@ async function convertToGif (chunks: Blob[], type: string = 'gif') {
   }
 
   // 메모리에 파일 올리기
-  ffmpeg.FS('writeFile', 'test.webm', await fetchFile(blob));
+  ffmpeg.FS('writeFile', 'video.webm', await fetchFile(blob));
   
   const convertMap: { [key:string]: () => Promise<void> } = {
-    gif: () => ffmpeg.run('-i', 'test.webm', '-r', '10', 'out.gif'),
-    mp4: () => ffmpeg.run('-i', 'test.webm', 'out.mp4'),
+    webm: () => Promise.resolve(),
+    gif: () => ffmpeg.run('-i', 'video.webm', '-r', '10', 'video.gif'),
+    mp4: () => ffmpeg.run('-i', 'video.webm', 'video.mp4'),
   };
 
   const mimeTypeMap: { [key: string]: string } = {
+    webm: 'video/webm',
     gif: 'image/gif',
     mp4: 'video/mp4',
   };
@@ -122,7 +114,7 @@ async function convertToGif (chunks: Blob[], type: string = 'gif') {
   await convert();
 
   // 파일 불러오기
-  const data = ffmpeg.FS('readFile', `out.${type}`);
+  const data = ffmpeg.FS('readFile', `video.${type}`);
 
   const url = URL.createObjectURL(new Blob([data.buffer], { type:mimeType }));
   return url;

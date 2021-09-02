@@ -9,7 +9,7 @@ import useRecording from '../../hooks/useRecording';
 
 type RecordPageProps = {};
 function RecordPage(props: RecordPageProps) {
-  const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo, downloadGif } = useRecording(); 
+  const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
 
   const recordingVideoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
@@ -30,14 +30,7 @@ function RecordPage(props: RecordPageProps) {
   }, [recordState]);
 
   const handleDownloadClick = async (type: string) => {
-    const handlerMap: {
-      [key: string]: (filename?: string) => void | Promise<void>
-    } = {
-      video: downloadVideo,
-      gif: downloadGif,
-    }
-
-    await handlerMap[type]();
+    await downloadVideo(type);
   };
 
   return (

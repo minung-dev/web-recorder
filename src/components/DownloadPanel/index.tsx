@@ -8,11 +8,14 @@ import Select from '../Select';
 import classnames from 'classnames';
 
 const FORMAT_ITEMS = [{
-  name: '비디오',
-  value: 'video',
+  name: '비디오 (WEBM)',
+  value: 'webm',
 }, {
   name: 'GIF',
   value: 'gif',
+}, {
+  name: '비디오 (MP4)',
+  value: 'mp4',
 }];
 
 type DownloadPanelProps = {
