@@ -1,7 +1,4 @@
 import React from 'react';
-import styles from './styles.module.css';
-
-import Button from '../Button';
 
 type Item = {
   name: string,
@@ -14,19 +11,18 @@ type SelectProps = {
   onChange: (value: string) => void,
 };
 
-function Select({ items, selected, onChange }: SelectProps) {
+function Select({ items, onChange }: SelectProps) {
+  const handleChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    onChange(e.currentTarget.value);
+  };
+
   return (
-    <div className={styles.Select}>
-      {items.map(item => (
-        <Button
-          key={item.value}
-          color="info"
-          outline={selected !== item.value}
-          onClick={() => onChange(item.value)}
-        >
-          {item.name}
-        </Button>
-      ))}
+    <div className="select is-info is-fullwidth">
+      <select onChange={handleChange}>
+        {items.map(item => (
+          <option value={item.value}>{item.name}</option>
+        ))}
+      </select>
     </div>
   );
 }
