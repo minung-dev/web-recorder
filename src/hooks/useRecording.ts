@@ -3,6 +3,10 @@ import { useState, useRef } from 'react';
 import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 const ffmpeg = createFFmpeg({ log: true });
 
+if (!ffmpeg.isLoaded()) {
+  ffmpeg.load();
+}
+
 const constraints = {
   video: true,
   audio: true,
@@ -19,7 +23,6 @@ function useRecording() {
   const mediaStream = useRef<MediaStream | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const recordedChunks = useRef<Blob[]>([]);
-
 
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     alert('지원하지 않는 브라우저입니다.');
@@ -97,8 +100,8 @@ async function convertVideo (chunks: Blob[], type: string = 'webm') {
   
   const convertMap: { [key:string]: () => Promise<void> } = {
     webm: () => Promise.resolve(),
-    gif: () => ffmpeg.run('-i', 'video.webm', '-r', '10', 'video.gif'),
-    mp4: () => ffmpeg.run('-i', 'video.webm', 'video.mp4'),
+    gif: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10', 'video.gif'),
+    mp4: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', 'video.mp4'),
   };
 
   const mimeTypeMap: { [key: string]: string } = {
