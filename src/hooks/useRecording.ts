@@ -101,7 +101,7 @@ async function convertVideo (chunks: Blob[], type: string = 'webm') {
   const convertMap: { [key:string]: () => Promise<void> } = {
     webm: () => Promise.resolve(),
     gif: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10', 'video.gif'),
-    mp4: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', 'video.mp4'),
+    mp4: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-c:a', 'libopus', '-b:a', '96K', 'video.mp4'),
   };
 
   const mimeTypeMap: { [key: string]: string } = {
