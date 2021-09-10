@@ -5,8 +5,8 @@
   "author": "minung.han <hmu332233@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "start:client": "parcel src/client/index.html",
+    "build": "parcel build src/client/index.html"
   },
   "devDependencies": {
     "@types/dom-mediacapture-record": "^1.0.10",
