@@ -6,7 +6,7 @@
   "description": "웨일 브라우저 전용 화면 녹화 확장앱입니다. 사이드바를 통해 미리보기가 가능하며 비디오 및 GIF 다운로드를 지원합니다.",
   
   "sidebar_action": {
-    "default_page": "index.html",
+    "default_page": "client/index.html",
     "default_icon": {
         "16": "icon.png"
     },
@@ -15,5 +15,13 @@
     "use_navigation_bar": false,
     "mobile_user_agent": false
   },
-  "content_security_policy": "script-src 'self' 'wasm-eval'; script-src-elem 'self' blob: https://www.google-analytics.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'wasm-eval'; script-src-elem 'self' blob: https://www.google-analytics.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["extensions/index.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["activeTab"]
 }
