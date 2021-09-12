@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './styles.module.css';
 
 type VideoProps = {
   autoPlay?: boolean,
@@ -8,7 +9,7 @@ type VideoProps = {
 
 const Video = React.forwardRef(({ autoPlay, controls, muted }: VideoProps, ref: React.Ref<HTMLVideoElement>) => {
   return (
-    <video style={{ width: '100%', height: '300px', backgroundColor: '#363636', borderRadius: '4px' }} ref={ref} autoPlay={autoPlay} controls={controls} muted={muted} />
+    <video className={styles.Video} ref={ref} autoPlay={autoPlay} controls={controls} muted={muted} />
   );
 });
 
