@@ -1,0 +1,45 @@
+.wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
+
+.tools {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  /* padding: 4px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid rgb(219, 219, 219); */
+}
+
+.tools .button {
+  margin-top: 4px;
+}
+
+.tools .button:first-child {
+  margin-top: 0px;
+}
+
+.button {
+  display: flex;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  color: #363636;
+  cursor: pointer;
+  justify-content: center;
+  padding: 8px;
+}
+
+.colorButton {
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 25px;
+  cursor: pointer;
+}
