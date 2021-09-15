@@ -17,11 +17,12 @@
   border: 1px solid rgb(219, 219, 219); */
 }
 
-.tools .button {
+.tools .feature {
+  display: flex;
   margin-top: 4px;
 }
 
-.tools .button:first-child {
+.tools .feature:first-child {
   margin-top: 0px;
 }
 
@@ -34,6 +35,10 @@
   cursor: pointer;
   justify-content: center;
   padding: 8px;
+}
+
+.colorList {
+  display: flex;
 }
 
 .colorButton {
