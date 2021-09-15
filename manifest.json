@@ -20,6 +20,7 @@
     {
       "matches": ["https://*/*"],
       "js": ["extensions/index.js"],
+      "css": ["extensions/index.css"],
       "run_at": "document_end"
     }
   ],
