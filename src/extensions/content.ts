@@ -146,7 +146,7 @@ export const injectApp = () => {
   });
 
   wrapper.element.append(canvas.element);
-  wrapper.element.append(tools.element);
   document.body.append(wrapper.element);
+  document.body.append(tools.element);
 };
 
