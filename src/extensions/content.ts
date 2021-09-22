@@ -1,8 +1,5 @@
 import styles from './content.css';
 
-// TODO: ctx를 다루는 좋은 방법 찾기
-let ctx: CanvasRenderingContext2D;
-
 const Wrapper = () => {
   const wrapper = document.createElement('div');
   wrapper.className = styles.wrapper;
@@ -91,7 +88,7 @@ const Canvas = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.outerHeight;
 
-  ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   ctx.strokeStyle = INITIAL_COLOR;
   ctx.fillStyle = INITIAL_COLOR;
   ctx.lineWidth = 2.5;
@@ -123,8 +120,19 @@ const Canvas = () => {
     }
   }
 
+  function setColor(color: string) {
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+  }
+
+  function clear() {
+    ctx.clearRect(0, 0, window.innerWidth, window.outerHeight);
+  }
+
   return {
     element: canvas,
+    setColor,
+    clear,
   };
 };
 
@@ -133,12 +141,11 @@ export const injectApp = () => {
   const canvas = Canvas();
   const tools = Tools({
     onClearClick: () => {
-      ctx.clearRect(0, 0, window.innerWidth, window.outerHeight);
+      canvas.clear();
     },
     onColorClick: (color: string) => {
       wrapper.setActive(true);
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
+      canvas.setColor(color);
     },
     onCursorClick: () => {
       wrapper.setActive(false);
