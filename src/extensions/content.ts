@@ -5,7 +5,6 @@ const Wrapper = () => {
   wrapper.className = styles.wrapper;
 
   function setActive(active: boolean) {
-    console.log(active)
     wrapper.style.pointerEvents = active ? 'unset' : 'none';
   }
 
@@ -31,7 +30,7 @@ const Tools = ({
 
   toolWrapper.innerHTML = `
     <div class="${styles.feature}">
-      <div id="tools-cursor" class="${styles.button}">
+      <div id="tools-cursor" class="${styles.button} ${styles.active}">
         <svg width="24px" height="24px" viewBox="0 0 320.943 320.943"><path d="M50.147 320.943a9.884 9.884 0 01-4.104-.882 10.031 10.031 0 01-5.926-9.148V10.032c0-4.055 2.439-7.718 6.19-9.265a10.015 10.015 0 0110.93 2.174l220.647 220.647a10.016 10.016 0 012.174 10.93 10.02 10.02 0 01-9.265 6.19H144.222l-87.415 77.699a10.015 10.015 0 01-6.66 2.536zm10.029-286.7v254.34l73.575-65.397a9.994 9.994 0 016.66-2.537h106.171z" /></svg>
       </div>
     </div>
@@ -58,26 +57,46 @@ const Tools = ({
     </div>
   `;
 
-  (toolWrapper.querySelector('#tools-cursor') as HTMLElement).addEventListener('click', handleCursorClick);
-  (toolWrapper.querySelector('#tools-color') as HTMLElement).addEventListener('click', handleColorClick);
-  (toolWrapper.querySelector('#tools-color-list') as HTMLElement).addEventListener('click', handleColorListClick);
-  (toolWrapper.querySelector('#tools-clear') as HTMLElement).addEventListener('click', handleClearClick);
+  const cursorButton = toolWrapper.querySelector('#tools-cursor') as HTMLElement;
+  const colorButton = toolWrapper.querySelector('#tools-color') as HTMLElement;
+  const clearButton = toolWrapper.querySelector('#tools-clear') as HTMLElement;
+  const colorList = toolWrapper.querySelector('#tools-color-list') as HTMLElement;
+
+  cursorButton.addEventListener('click', handleCursorClick);
+  colorButton.addEventListener('click', toggleColorList);
+  clearButton.addEventListener('click', handleClearClick);
+  colorList.addEventListener('click', handleColorListClick);
 
   function handleCursorClick() {
     onCursorClick();
+    changeActive('cursor');
   };
 
   function handleColorListClick(e: MouseEvent) {
     const color = (e.target as HTMLElement).style.backgroundColor;
     onColorClick(color);
+    toggleColorList();
+    changeActive('color');
   }
 
   function handleClearClick() {
     onClearClick();
   }
 
-  function handleColorClick() {
-    (toolWrapper.querySelector('#tools-color-list') as HTMLElement).classList.toggle(styles.hide);
+  function toggleColorList() {
+    colorList.classList.toggle(styles.hide);
+  }
+
+  function changeActive(type: 'cursor' | 'color') {
+    const buttons = toolWrapper.querySelectorAll(`.${styles.button}`);
+    buttons.forEach(button => button.classList.remove(styles.active));
+
+    const buttonMap = {
+      cursor: cursorButton,
+      color: colorButton
+    };
+
+    buttonMap[type]?.classList.add(styles.active);
   }
 
   return {

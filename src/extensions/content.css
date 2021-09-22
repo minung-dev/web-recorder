@@ -35,6 +35,11 @@
   padding: 8px;
 }
 
+.button.active {
+  border-width: 2px;
+  border-color: hsl(171, 100%, 41%);
+}
+
 .colorList {
   display: flex;
 }
