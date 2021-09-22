@@ -69,14 +69,14 @@ const Tools = ({
 
   function handleCursorClick() {
     onCursorClick();
-    changeActive('cursor');
+    changeActiveButton('cursor');
   };
 
   function handleColorListClick(e: MouseEvent) {
     const color = (e.target as HTMLElement).style.backgroundColor;
     onColorClick(color);
     toggleColorList();
-    changeActive('color');
+    changeActiveButton('color');
   }
 
   function handleClearClick() {
@@ -87,7 +87,7 @@ const Tools = ({
     colorList.classList.toggle(styles.hide);
   }
 
-  function changeActive(type: 'cursor' | 'color') {
+  function changeActiveButton(type: 'cursor' | 'color') {
     const buttons = toolWrapper.querySelectorAll(`.${styles.button}`);
     buttons.forEach(button => button.classList.remove(styles.active));
 
@@ -99,8 +99,13 @@ const Tools = ({
     buttonMap[type]?.classList.add(styles.active);
   }
 
+  function setActive(active: boolean) {
+    toolWrapper.style.display = active ? 'block' : 'none';
+  }
+
   return {
     element: toolWrapper,
+    setActive,
   };
 };
 
@@ -178,5 +183,13 @@ export const injectApp = () => {
   wrapper.element.append(canvas.element);
   document.body.append(wrapper.element);
   document.body.append(tools.element);
+
+  chrome.runtime.onMessage.addListener(message => {
+    switch (message.action) {
+      case 'web-recorder-tools-active':
+        tools.setActive(true);
+      break;
+    }
+  });
 };
 
