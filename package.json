@@ -7,10 +7,11 @@
   "scripts": {
     "start:client": "parcel src/client/index.html",
     "build:client": "parcel build src/client/index.html",
-    "build": "parcel build src/client/index.html src/extensions/index.ts"
+    "build": "EXTENSION_MODE=true parcel build src/client/index.html src/extensions/index.ts"
   },
   "devDependencies": {
     "@types/dom-mediacapture-record": "^1.0.10",
+    "@types/node": "^16.9.6",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
     "parcel-bundler": "^1.12.5",

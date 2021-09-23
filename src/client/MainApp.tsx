@@ -5,13 +5,13 @@ import Button from './components/Button';
 import RecordPage from './pages/RecordPage';
 import Header from './components/Header';
 
+const extensionMode = process.env.EXTENSION_MODE === 'true';
 function MainApp() {
   return (
     <>
       <Header />
-      <RecordPage />
+      <RecordPage extensionMode={extensionMode} />
     </>
-    
   );
 }
 

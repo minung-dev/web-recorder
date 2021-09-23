@@ -9,8 +9,8 @@ import useRecording from '../../hooks/useRecording';
 
 import utilExtension from '../../utils/extension';
 
-type RecordPageProps = {};
-function RecordPage(props: RecordPageProps) {
+type RecordPageProps = { extensionMode: boolean };
+function RecordPage({ extensionMode }: RecordPageProps) {
   const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
 
   const recordingVideoRef = useRef<HTMLVideoElement>(null);
@@ -50,10 +50,14 @@ function RecordPage(props: RecordPageProps) {
         <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
-        <hr />
-        <Button block={false} outline onClick={handleAddToolClick}>
-          현재 페이지에 발표 도구 추가
-        </Button>
+        {extensionMode && (
+          <>
+            <hr />
+            <Button block={false} outline onClick={handleAddToolClick}>
+              현재 페이지에 발표 도구 추가
+            </Button>
+          </>
+        )}
       </Section>
       <DownloadPanel open={stopped} onDownloadClick={handleDownloadClick} />
     </div>
