@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Screen Recorder - 화면 녹화 확장앱",
-  "version": "0.4.2",
+  "version": "0.5.0",
 
   "description": "웨일 브라우저 전용 화면 녹화 확장앱입니다. 사이드바를 통해 미리보기가 가능하며 비디오 및 GIF 다운로드를 지원합니다.",
   
@@ -20,8 +20,7 @@
     {
       "matches": ["https://*/*"],
       "js": ["extensions/index.js"],
-      "css": ["extensions/index.css"],
-      "run_at": "document_end"
+      "css": ["extensions/index.css"]
     }
   ],
   "permissions": ["activeTab"]
