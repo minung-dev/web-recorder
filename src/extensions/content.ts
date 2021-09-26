@@ -113,8 +113,18 @@ const Canvas = () => {
   const INITIAL_COLOR = 'rgb(255,59,48)';
 
   const canvas = document.createElement('canvas');
-  canvas.width = window.innerWidth;
-  canvas.height = window.outerHeight;
+  onResize(); // init size
+
+  // 웹페이지 사이즈 변경 감지
+  const resizeObserver = new ResizeObserver(entries => {
+    onResize();
+  });
+  resizeObserver.observe(document.body);
+
+  function onResize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.outerHeight;
+  }
 
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   ctx.strokeStyle = INITIAL_COLOR;
