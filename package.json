@@ -10,6 +10,7 @@
     "build": "EXTENSION_MODE=true parcel build src/client/index.html src/extensions/index.ts"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.158",
     "@types/dom-mediacapture-record": "^1.0.10",
     "@types/node": "^16.9.6",
     "@types/react": "^17.0.18",
