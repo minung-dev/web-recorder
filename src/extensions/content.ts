@@ -99,13 +99,8 @@ const Tools = ({
     buttonMap[type]?.classList.add(styles.active);
   }
 
-  function setActive(active: boolean) {
-    toolWrapper.style.display = active ? 'block' : 'none';
-  }
-
   return {
     element: toolWrapper,
-    setActive,
   };
 };
 
@@ -193,13 +188,5 @@ export const injectApp = () => {
   wrapper.element.append(canvas.element);
   document.body.append(wrapper.element);
   document.body.append(tools.element);
-
-  chrome.runtime.onMessage.addListener(message => {
-    switch (message.action) {
-      case 'web-recorder-tools-active':
-        tools.setActive(true);
-      break;
-    }
-  });
 };
 
