@@ -4,6 +4,7 @@ import Section from '../../components/Section';
 import Button from '../../components/Button';
 import Video from '../../components/Video';
 import DownloadPanel from '../../components/DownloadPanel';
+import Progress from '../../components/Progress';
 
 import useRecording from '../../hooks/useRecording';
 
@@ -47,6 +48,7 @@ function RecordPage({ extensionMode }: RecordPageProps) {
         ) : (
           <Video key="record" ref={recordingVideoRef} autoPlay muted />
         )}
+        <Progress on={recording} />
         <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>

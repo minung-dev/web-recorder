@@ -40,7 +40,7 @@ function Progress({
 
   return (
     <div className={styles.Progress}>
-      <span className={classnames(styles.Progress__text, 'is-size-7', 'has-text-weight-medium', isMax && 'has-text-white')}>{value}초 / 최대 {max}초</span>
+      <span className={classnames(styles.Progress__text, 'is-size-7', 'has-text-weight-medium', isMax && 'has-text-white')}>{value}초 / 최대 권장 {max}초</span>
       <progress className={classnames('progress', 'is-large', isMax ? 'is-danger' : 'is-primary')} value={value} max={max} />
     </div>
   );
@@ -48,7 +48,7 @@ function Progress({
 
 Progress.defaultProps = {
   on: false,
-  max: 600,
+  max: 1000,
   // onMaximumProgress: () => {},
 };
 
