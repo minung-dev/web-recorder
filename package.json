@@ -7,8 +7,8 @@
   "scripts": {
     "start:client": "parcel src/client/index.html",
     "build:client": "EXTENSION_MODE=true parcel build src/client/index.html",
-    "build:extension": "parcel build src/extensions/index.ts",
-    "build:prd": "rm -rf dist; yarn build:extension; cp whale/index.html dist/index.html; cp whale/manifest.json dist/manifest.json; cp whale/icon.png dist/icon.png"
+    "build:extension": "parcel build src/extensions/index.ts -d dist_extension",
+    "build:prd": "rm -rf dist_extension; yarn build:extension; cp whale/index.html dist_extension/index.html; cp whale/manifest.json dist_extension/manifest.json; cp whale/icon.png dist_extension/icon.png; cp src/extensions/background.js dist_extension/background.js"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.158",
