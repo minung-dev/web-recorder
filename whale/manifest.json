@@ -22,5 +22,11 @@
       "css": ["index.css"]
     }
   ],
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab"],
+  "externally_connectable": {
+    "matches": ["https://web-recorder.minung.dev/*", "http://localhost:1234/*"]
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
