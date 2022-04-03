@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start:client": "parcel src/client/index.html",
-    "build:client": "parcel build src/client/index.html",
-    "build": "EXTENSION_MODE=true parcel build src/client/index.html src/extensions/index.ts",
-    "build:prd": "rm -rf dist; yarn build; cp manifest.json dist/manifest.json; cp icon.png dist/icon.png"
+    "build:client": "EXTENSION_MODE=true parcel build src/client/index.html",
+    "build:extension": "parcel build src/extensions/index.ts",
+    "build:prd": "rm -rf dist; yarn build:extension; cp whale/index.html dist/index.html; cp whale/manifest.json dist/manifest.json; cp whale/icon.png dist/icon.png"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.158",
