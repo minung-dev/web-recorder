@@ -12,7 +12,7 @@ function MainApp() {
     <>
       <Header />
       <RecordPage extensionMode={extensionMode} />
-      <Adfit />
+      {/* <Adfit /> */}
     </>
   );
 }
