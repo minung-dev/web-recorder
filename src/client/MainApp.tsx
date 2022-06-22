@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import RecordPage from './pages/RecordPage';
 import Header from './components/Header';
+import Adfit from './components/Adfit';
 
 const extensionMode = !!chrome.runtime;
 function MainApp() {
@@ -11,6 +12,7 @@ function MainApp() {
     <>
       <Header />
       <RecordPage extensionMode={extensionMode} />
+      <Adfit />
     </>
   );
 }
