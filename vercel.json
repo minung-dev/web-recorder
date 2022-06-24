@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/adfit", "destination": "https://adfit.minung.dev" }]
+}
