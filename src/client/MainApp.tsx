@@ -13,7 +13,7 @@ function MainApp() {
       <Header />
       <RecordPage extensionMode={extensionMode} />
       {/* <Adfit /> */}
-      <iframe src='/adfit' />
+      <iframe src='/adfit' height={80} />
     </>
   );
 }
