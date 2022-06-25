@@ -7,16 +7,18 @@ function Adfit(props: AdfitProps) {
     if (!document.getElementById('KakaoAdfit')) {
       const scriptKakaoJS = document.createElement('script');
       scriptKakaoJS.id = 'KakaoAdfit';
-      scriptKakaoJS.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+      scriptKakaoJS.src = 'https://t1.daumcdn.net/kas/static/ba.min.js';
       scriptKakaoJS.async = true;
       document.body.appendChild(scriptKakaoJS);
     }
   }, []);
   return (
-    <ins className="kakao_ad_area" style={{ display: 'none' }} 
-      data-ad-unit    = "DAN-o7sIbiwPbAROJCKE" 
-      data-ad-width   = "728" 
-      data-ad-height  = "90" />
+    <div className="container is-flex is-flex-direction-column">
+      <ins className="kakao_ad_area" style={{ display: 'none' }} 
+        data-ad-unit    = "DAN-2x3MLfVyFH8Fl8Hw" 
+        data-ad-width   = "320" 
+        data-ad-height  = "50"></ins>
+    </div>
   );
 }
 

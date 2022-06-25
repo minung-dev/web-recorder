@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 import RecordPage from './pages/RecordPage';
 import Header from './components/Header';
 import Adfit from './components/Adfit';

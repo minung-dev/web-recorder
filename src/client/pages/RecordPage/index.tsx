@@ -55,7 +55,7 @@ function RecordPage({ extensionMode }: RecordPageProps) {
         {extensionMode && (
           <>
             <hr />
-            <Button block={false} outline onClick={handleAddToolClick}>
+            <Button outline onClick={handleAddToolClick}>
               현재 페이지에 발표 도구 추가
             </Button>
           </>
