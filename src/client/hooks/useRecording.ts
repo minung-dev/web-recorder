@@ -88,7 +88,25 @@ async function downloadVideo(chunks: Blob[], type: string = 'webm', fileName: st
 }
 
 // TODO: worker에서 동작하도록 수정
-async function convertVideo (chunks: Blob[], type: string = 'webm') {
+async function convertVideo(chunks: Blob[], type: string = 'webm') {
+  switch (type) {
+    case 'webm':
+      return await byNormal(chunks, type);
+    case 'gif':
+    case 'mp4':
+      return await byFfmpeg(chunks, type);
+    default:
+      return '';
+  }
+};
+
+async function byNormal(chunks: Blob[], type: string = 'webm') {
+  const blob = new Blob(chunks, { type: 'video/webm' });
+  const url = URL.createObjectURL(blob);
+  return url;
+};
+
+async function byFfmpeg(chunks: Blob[], type: string = 'mp4') {
   const blob = new Blob(chunks, { type: 'video/webm' });
 
   if (!ffmpeg.isLoaded()) {
@@ -99,13 +117,11 @@ async function convertVideo (chunks: Blob[], type: string = 'webm') {
   ffmpeg.FS('writeFile', 'video.webm', await fetchFile(blob));
   
   const convertMap: { [key:string]: () => Promise<void> } = {
-    webm: () => Promise.resolve(),
     gif: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10', 'video.gif'),
     mp4: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10',  '-c:v', 'libx264', '-crf', '20', '-c:a', 'aac', '-strict', 'experimental', 'video.mp4'),
   };
 
   const mimeTypeMap: { [key: string]: string } = {
-    webm: 'video/webm',
     gif: 'image/gif',
     mp4: 'video/mp4',
   };
@@ -121,6 +137,6 @@ async function convertVideo (chunks: Blob[], type: string = 'webm') {
 
   const url = URL.createObjectURL(new Blob([data.buffer], { type:mimeType }));
   return url;
-}
+};
 
 export default useRecording;
