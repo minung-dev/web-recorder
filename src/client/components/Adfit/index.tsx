@@ -11,8 +11,7 @@ function Adfit(props: AdfitProps) {
       scriptKakaoJS.async = true;
       document.body.appendChild(scriptKakaoJS);
     }
-   
-  }, [])
+  }, []);
   return (
     <ins className="kakao_ad_area" style={{ display: 'none' }} 
       data-ad-unit    = "DAN-o7sIbiwPbAROJCKE" 
