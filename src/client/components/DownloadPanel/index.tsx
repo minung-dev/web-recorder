@@ -12,7 +12,7 @@ import classnames from 'classnames';
 //   value: 'webm',
 // }];
 const FORMAT_ITEMS = [{
-  name: '비디오 (WEBM)',
+  name: '비디오 (WEBM) [권장]',
   value: 'webm',
 }, {
   name: 'GIF',
