@@ -42,6 +42,7 @@ function DownloadPanel({ open, onDownloadClick }: DownloadPanelProps) {
         <label className="label">파일 포멧</label>
         <Select items={FORMAT_ITEMS} selected={format} onChange={setFormat} />
         <p className="help">다운로드할 파일의 포멧을 선택합니다.</p>
+        <p className="help">GIF나 MP4로 변환은 <a href="https://convertio.co/kr/webm-gif/" target="_blank"><b>여기</b></a>를 이용해보세요!</p>
       </div>
       <Button color="info" loading={isLoading} onClick={handleDownloadClick}>다운로드</Button>
     </Section>
