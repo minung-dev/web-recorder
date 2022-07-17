@@ -9,10 +9,12 @@ import Progress from '../../components/Progress';
 import useRecording from '../../hooks/useRecording';
 
 import utilExtension from '../../utils/extension';
+import useCheckExtension from '../../hooks/useCheckExtension';
 
-type RecordPageProps = { extensionMode: boolean };
-function RecordPage({ extensionMode }: RecordPageProps) {
+type RecordPageProps = {};
+function RecordPage({}: RecordPageProps) {
   const { recordState, startRecording, stopRecording, getLiveStream, getVideoUrl, downloadVideo } = useRecording(); 
+  const [canUseExtension] = useCheckExtension();
 
   const recordingVideoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
@@ -52,7 +54,7 @@ function RecordPage({ extensionMode }: RecordPageProps) {
         <Button className="mt-2" onClick={recording ? stopRecording : startRecording}>
           {recording ? '녹화 종료' : '녹화 시작'}
         </Button>
-        {extensionMode && (
+        {canUseExtension && (
           <>
             <hr />
             <Button outline onClick={handleAddToolClick}>

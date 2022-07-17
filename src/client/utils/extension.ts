@@ -1,8 +1,8 @@
 const extensionId: string = process.env.EXTENSION_ID || '';
 
-type sendMessageProps = { action: 'web-recorder-tools-active', data?: object }
-const sendMessage = ({ action, data = {} }: sendMessageProps) => {
-  chrome.runtime.sendMessage(extensionId, { action, data });
+type sendMessageProps = { action: 'web-recorder-tools-active' | 'web-recorder-check', data?: object, callback?: ((response: any) => void) }
+const sendMessage = ({ action, data = {}, callback }: sendMessageProps) => {
+  chrome.runtime.sendMessage(extensionId, { action, data }, callback);
 }
 
 export default {
