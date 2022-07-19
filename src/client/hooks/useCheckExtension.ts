@@ -11,8 +11,7 @@ function useCheckExtension() {
     }});
   }, []);
 
-  // return [canUseExtension]; TODO: 익스텐션 심사 통과 이후 아래 코드와 변경하기
-  return [true];
+  return [canUseExtension];
 }
 
 export default useCheckExtension;
