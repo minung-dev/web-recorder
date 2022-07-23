@@ -9,6 +9,8 @@
 
   transition: transform 0.5s ease 0s;
   transform: translate3d(0px, 100%, 0px);
+  
+  z-index: 999;
 }
 
 .DownloadPanel.open {
