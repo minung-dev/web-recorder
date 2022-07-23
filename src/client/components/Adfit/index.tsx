@@ -13,11 +13,11 @@ function Adfit(props: AdfitProps) {
     }
   }, []);
   return (
-    <div className="container is-flex is-flex-direction-column">
-      <ins className="kakao_ad_area" style={{ display: 'none' }} 
-        data-ad-unit    = "DAN-2x3MLfVyFH8Fl8Hw" 
-        data-ad-width   = "320" 
-        data-ad-height  = "50"></ins>
+    <div className="container">
+      <ins className="kakao_ad_area" style={{ display: 'none' }}
+         data-ad-unit    = "DAN-kb6KBgxfsjneHEBu" 
+         data-ad-width   = "250" 
+         data-ad-height  = "250" />
     </div>
   );
 }
