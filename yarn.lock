@@ -28,6 +28,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ffmpeg/util@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "@ffmpeg/util@npm:0.12.2"
+  checksum: 10c0/a1c8ab735762f2b1e3174bf96125feb541be528327843c9719042012381603a17d511d01afd2c8c2e7349453a8001ae6bf1ba8769779d305342e7f42ed704a9d
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -2972,6 +2979,7 @@ __metadata:
   dependencies:
     "@ffmpeg/core": "npm:^0.12.6"
     "@ffmpeg/ffmpeg": "npm:^0.12.10"
+    "@ffmpeg/util": "npm:^0.12.2"
     "@parcel/packager-ts": "npm:^2.12.0"
     "@parcel/transformer-typescript-tsc": "npm:^2.15.4"
     "@parcel/transformer-typescript-types": "npm:^2.12.0"
