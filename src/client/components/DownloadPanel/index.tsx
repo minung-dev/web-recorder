@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './styles.module.css';
+import * as styles from './styles.module.css';
 
 import Section from '../Section';
 import Button from '../Button';

@@ -1,9 +1,15 @@
 import { useState, useRef } from 'react';
 
-import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
-const ffmpeg = createFFmpeg({ log: true });
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { fetchFile } from '@ffmpeg/util';
 
-if (!ffmpeg.isLoaded()) {
+const ffmpeg = new FFmpeg();
+
+ffmpeg.on('log', ({ message }) => {
+  console.log(message);
+});
+
+if (!ffmpeg.loaded) {
   // ffmpeg.load();
 }
 
@@ -109,16 +115,16 @@ async function byNormal(chunks: Blob[], type: string = 'webm') {
 async function byFfmpeg(chunks: Blob[], type: string = 'mp4') {
   const blob = new Blob(chunks, { type: 'video/webm' });
 
-  if (!ffmpeg.isLoaded()) {
+  if (!ffmpeg.loaded) {
     await ffmpeg.load();
   }
 
   // 메모리에 파일 올리기
-  ffmpeg.FS('writeFile', 'video.webm', await fetchFile(blob));
+  await ffmpeg.writeFile('video.webm', await fetchFile(blob));
   
-  const convertMap: { [key:string]: () => Promise<void> } = {
-    gif: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10', 'video.gif'),
-    mp4: () => ffmpeg.run('-i', 'video.webm', '-preset', 'ultrafast', '-r', '10',  '-c:v', 'libx264', '-crf', '20', '-c:a', 'aac', '-strict', 'experimental', 'video.mp4'),
+  const convertMap: { [key:string]: () => Promise<number> } = {
+    gif: () => ffmpeg.exec(['-i', 'video.webm', '-preset', 'ultrafast', '-r', '10', 'video.gif']),
+    mp4: () => ffmpeg.exec(['-i', 'video.webm', '-preset', 'ultrafast', '-r', '10',  '-c:v', 'libx264', '-crf', '20', '-c:a', 'aac', '-strict', 'experimental', 'video.mp4']),
   };
 
   const mimeTypeMap: { [key: string]: string } = {
@@ -133,9 +139,9 @@ async function byFfmpeg(chunks: Blob[], type: string = 'mp4') {
   await convert();
 
   // 파일 불러오기
-  const data = ffmpeg.FS('readFile', `video.${type}`);
+  const data = await ffmpeg.readFile(`video.${type}`);
 
-  const url = URL.createObjectURL(new Blob([data.buffer], { type:mimeType }));
+  const url = URL.createObjectURL(new Blob([data], { type:mimeType }));
   return url;
 };
 
