@@ -7,7 +7,7 @@
     "start:client": "parcel src/client/index.html",
     "build:client": "EXTENSION_MODE=true parcel build src/client/index.html --dist-dir dist",
     "build:extension": "parcel build src/extensions/index.ts --dist-dir dist_extension",
-    "build:prd": "rm -rf dist_extension; yarn build:extension; mkdir -p dist_extension; cp index.js dist_extension/index.js; cp index.css dist_extension/index.css; cp whale/index.html dist_extension/index.html; cp whale/manifest.json dist_extension/manifest.json; cp whale/icon.png dist_extension/icon.png; cp src/extensions/background.js dist_extension/background.js"
+    "build:prd": "rm -rf dist_extension; yarn build:extension; cp whale/index.html dist_extension/index.html; cp whale/manifest.json dist_extension/manifest.json; cp whale/icon.png dist_extension/icon.png; cp src/extensions/background.js dist_extension/background.js"
   },
   "devDependencies": {
     "@parcel/packager-ts": "^2.12.0",
